@@ -1,0 +1,83 @@
+class Solution {
+
+    String[] ones = {
+        "", "One", "Two", "Three", "Four",
+        "Five", "Six", "Seven", "Eight", "Nine",
+        "Ten", "Eleven", "Twelve", "Thirteen",
+        "Fourteen", "Fifteen", "Sixteen",
+        "Seventeen", "Eighteen", "Nineteen"
+    };
+
+    String[] tens = {
+        "", "", "Twenty", "Thirty", "Forty",
+        "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"
+    };
+
+    public String numberToWords(int num) {
+
+        if (num == 0) {
+            return "Zero";
+        }
+
+        int[] values = {
+            1000000000, 1000000, 1000, 1
+        };
+
+        String[] names = {
+            "Billion", "Million", "Thousand", ""
+        };
+
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < values.length; i++) {
+
+            if (num >= values[i]) {
+
+                int part = num / values[i];
+
+                result.append(convert(part));
+
+                if (!names[i].isEmpty()) {
+                    result.append(" ").append(names[i]);
+                }
+
+                num = num % values[i];
+
+                if (num > 0) {
+                    result.append(" ");
+                }
+            }
+        }
+
+        return result.toString();
+    }
+
+    public String convert(int num) {
+
+        StringBuilder ans = new StringBuilder();
+
+        if (num >= 100) {
+            ans.append(ones[num / 100]).append(" Hundred");
+            num = num % 100;
+
+            if (num > 0) {
+                ans.append(" ");
+            }
+        }
+
+        if (num >= 20) {
+            ans.append(tens[num / 10]);
+            num = num % 10;
+
+            if (num > 0) {
+                ans.append(" ").append(ones[num]);
+            }
+        }
+
+        else if (num > 0) {
+            ans.append(ones[num]);
+        }
+
+        return ans.toString();
+    }
+};
